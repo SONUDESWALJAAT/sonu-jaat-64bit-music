@@ -1,3 +1,4 @@
+
 name: Build SONU JAAT APK
 on: [push, workflow_dispatch]
 
@@ -18,16 +19,16 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install Buildozer
+    - name: Install Buildozer and Platform Dependencies
       run: |
-        pip3 install --user --upgrade buildozer cython virtualenv sh
         sudo apt-get update
-        sudo apt-get install -y zip unzip openjdk-17-jdk
+        sudo apt-get install -y zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev sqlite3 bzip2 libbz2-dev
+        sudo pip3 install --upgrade buildozer cython virtualenv sh
 
     - name: Build APK with Buildozer
       run: |
         export PATH=$PATH:~/.local/bin
-        buildozer android debug
+        sudo buildozer android debug
       env:
         BUILDOZER_WARN_ON_ROOT: 0
 
